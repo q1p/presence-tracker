@@ -21,18 +21,6 @@ class SettingsRepository private constructor() {
                 .getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
     }
 
-    companion object {
-        private const val PREFS_NAME = "settings"
-
-        private const val PREF_SSID_NAME = "ssidName"
-        private const val PREF_FENCING_RADIUS = "fencingRadius"
-        private const val PREF_FENCING_POINT_LAT = "fencingPointLat"
-        private const val PREF_FENCING_POINT_LON = "fencingPointLon"
-
-        val instance by lazy { Holder.INSTANCE }
-    }
-
-
     var ssidName
         get() = prefs.getString(PREF_SSID_NAME, "")
         set(value) {
@@ -58,4 +46,15 @@ class SettingsRepository private constructor() {
                     .putDouble(PREF_FENCING_POINT_LON, value.longitude)
                     .apply()
         }
+
+    companion object {
+        private const val PREFS_NAME = "settings"
+
+        private const val PREF_SSID_NAME = "ssidName"
+        private const val PREF_FENCING_RADIUS = "fencingRadius"
+        private const val PREF_FENCING_POINT_LAT = "fencingPointLat"
+        private const val PREF_FENCING_POINT_LON = "fencingPointLon"
+
+        val instance by lazy { Holder.INSTANCE }
+    }
 }

@@ -3,6 +3,7 @@ package me.venko.presencetracker.ui.tracker
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import me.venko.presencetracker.data.settings.SettingsRepository
+import me.venko.presencetracker.utils.logd
 
 /**
  * @author Victor Kosenko
