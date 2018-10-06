@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <integer name="et_generic_max_len">255</integer>
+    <integer name="et_ssid_name_max_len">32</integer>
+    <integer name="fragment_default_animation_duration">300</integer>
+</resources>

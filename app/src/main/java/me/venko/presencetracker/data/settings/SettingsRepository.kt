@@ -21,8 +21,8 @@ class SettingsRepository private constructor() {
                 .getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
     }
 
-    var ssidName
-        get() = prefs.getString(PREF_SSID_NAME, "")
+    var ssidName: String
+        get() = prefs.getString(PREF_SSID_NAME, "").orEmpty()
         set(value) {
             prefs.edit().putString(PREF_SSID_NAME, value).apply()
         }
@@ -36,8 +36,8 @@ class SettingsRepository private constructor() {
     var fencingPoint: Location
         get() {
             return Location("").apply {
-                latitude = prefs.getDouble(PREF_FENCING_POINT_LAT, 0.0)
-                longitude = prefs.getDouble(PREF_FENCING_POINT_LON, 0.0)
+                latitude = prefs.getDouble(PREF_FENCING_POINT_LAT, 57.44153)
+                longitude = prefs.getDouble(PREF_FENCING_POINT_LON, 42.17098)
             }
         }
         set(value) {

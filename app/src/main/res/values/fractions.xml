@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<resources>
+    <fraction name="fraction_start">-100%p</fraction>
+    <fraction name="fraction_end">100%p</fraction>
+</resources>

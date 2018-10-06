@@ -6,7 +6,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProviders
+import kotlinx.android.synthetic.main.fragment_tracker.*
 import me.venko.presencetracker.R
+import me.venko.presencetracker.ui.settings.SettingsFragment
+import me.venko.presencetracker.utils.replaceFragmentAnimate
+import me.venko.presencetracker.viewmodel.TrackerViewModel
 import pub.devrel.easypermissions.EasyPermissions
 import pub.devrel.easypermissions.PermissionRequest
 
@@ -27,7 +31,12 @@ class TrackerFragment : BaseFragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         viewModel = ViewModelProviders.of(this).get(TrackerViewModel::class.java)
+        btSettings.setOnClickListener { displaySettings() }
         requestLocationPermissions()
+    }
+
+    private fun displaySettings() {
+        replaceFragmentAnimate(SettingsFragment.newInstance(), R.id.container)
     }
 
     private fun requestLocationPermissions() {
@@ -37,6 +46,7 @@ class TrackerFragment : BaseFragment() {
                 Manifest.permission.ACCESS_COARSE_LOCATION,
                 Manifest.permission.ACCESS_FINE_LOCATION
         )
+
                 .setRationale(R.string.dialog_rationale_location_perms)
                 .setPositiveButtonText(R.string.dialog_button_ok)
                 .setNegativeButtonText(R.string.dialog_button_decline)

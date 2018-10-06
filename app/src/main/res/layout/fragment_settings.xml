@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/tvSsidCaption"
+        style="@style/AppTheme.Text.Title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/view_margin_regular"
+        android:layout_marginTop="@dimen/view_margin_regular"
+        android:layout_marginRight="@dimen/view_margin_regular"
+        android:text="@string/tv_settings_ssid_caption" />
+
+    <EditText
+        android:id="@+id/etSsidName"
+        style="@style/AppTheme.EditText.SsidName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/view_margin_regular"
+        android:layout_marginTop="@dimen/view_margin_regular"
+        android:layout_marginRight="@dimen/view_margin_regular"
+        android:hint="@string/et_settings_ssid_name_hint" />
+
+    <TextView
+        android:id="@+id/tvLocationCaption"
+        style="@style/AppTheme.Text.Title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/view_margin_regular"
+        android:layout_marginTop="@dimen/view_margin_medium"
+        android:layout_marginRight="@dimen/view_margin_regular"
+        android:text="@string/tv_settings_location_caption" />
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="@dimen/view_margin_regular"
+        android:layout_weight="1">
+
+        <com.google.android.gms.maps.MapView
+            android:id="@+id/mapLocation"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+        <me.venko.presencetracker.ui.views.RadiusOverlayView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:outerColor="@color/view_radius_overlay"
+            app:radiusMargin="@dimen/view_margin_regular" />
+    </FrameLayout>
+
+    <Button
+        android:id="@+id/btSave"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/view_margin_regular"
+        android:text="@string/bt_settings_save" />
+
+</LinearLayout>

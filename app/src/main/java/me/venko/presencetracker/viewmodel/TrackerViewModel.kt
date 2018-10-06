@@ -1,4 +1,4 @@
-package me.venko.presencetracker.ui.tracker
+package me.venko.presencetracker.viewmodel
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
