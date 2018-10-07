@@ -53,4 +53,21 @@ class TrackerFragment : BaseFragment() {
                 .build())
     }
 
+    override fun onPermissionsGranted(requestCode: Int, perms: MutableList<String>) {
+        if (REQUEST_LOCATION_PERMS == requestCode) {
+            viewModel.onLocationPermissionsGranted()
+        }
+    }
+
+    override fun onPermissionsDenied(requestCode: Int, perms: MutableList<String>) {
+        if (REQUEST_LOCATION_PERMS == requestCode) {
+            viewModel.onLocationPermissionsDenied()
+        }
+    }
+
+    companion object {
+        private const val REQUEST_LOCATION_PERMS = 72
+
+        fun newInstance() = TrackerFragment()
+    }
 }

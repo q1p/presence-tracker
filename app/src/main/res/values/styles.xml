@@ -8,4 +8,16 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <style name="AppTheme.Text.Title" parent="TextAppearance.AppCompat.Title" />
+
+    <style name="AppTheme.Text.Medium" parent="TextAppearance.AppCompat.Medium" />
+
+    <style name="AppTheme.EditText" parent="Widget.AppCompat.EditText">
+        <item name="android:maxLength">@integer/et_generic_max_len</item>
+    </style>
+
+    <style name="AppTheme.EditText.SsidName" parent="Widget.AppCompat.EditText">
+        <item name="android:maxLength">@integer/et_ssid_name_max_len</item>
+    </style>
+
 </resources>

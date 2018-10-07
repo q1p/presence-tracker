@@ -1,9 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/tracker"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ui.tracker.TrackerFragment">
+
+    <TextView
+        android:id="@+id/tvCaption"
+        style="@style/AppTheme.Text.Title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/view_margin_regular"
+        android:layout_marginTop="@dimen/view_margin_regular"
+        android:text="@string/tv_tracker_status_caption"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tvStatus"
+        style="@style/AppTheme.Text.Medium"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/view_margin_regular"
+        app:layout_constraintBottom_toBottomOf="@id/tvCaption"
+        app:layout_constraintEnd_toStartOf="@id/btSettings"
+        app:layout_constraintStart_toEndOf="@id/tvCaption"
+        tools:text="Present" />
+
+    <ImageButton
+        android:id="@+id/btSettings"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="?android:selectableItemBackgroundBorderless"
+        android:padding="@dimen/view_padding_regular"
+        android:src="@drawable/ic_settings"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

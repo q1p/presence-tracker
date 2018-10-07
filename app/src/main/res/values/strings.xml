@@ -1,3 +1,28 @@
 <resources>
+    <!-- General -->
     <string name="app_name">Presence Tracker</string>
+    <!-- END: General -->
+
+    <!-- Dialogs -->
+    <string name="dialog_button_ok">OK</string>
+    <string name="dialog_button_decline">Decline</string>
+    <string name="dialog_rationale_location_perms">This app needs device location permissions to be able to track the presence</string>
+    <!-- END: Dialogs -->
+
+    <!-- Tracker -->
+    <string name="tv_tracker_status_caption">Current status:</string>
+    <string name="tv_tracker_status_evaluating">Initializing…</string>
+    <string name="tv_tracker_status_present_geo">Inside (GEO)</string>
+    <string name="tv_tracker_status_present_wifi">Inside (Wi-Fi)</string>
+    <string name="tv_tracker_status_outside">Outside</string>
+    <string name="tv_tracker_status_no_permissions">No permissions given</string>
+    <string name="tv_tracker_status_unknown">Unknown</string>
+    <!-- END: Tracker -->
+
+    <!-- Settings -->
+    <string name="tv_settings_ssid_caption">SSID Name</string>
+    <string name="et_settings_ssid_name_hint">Enter access point SSID</string>
+    <string name="tv_settings_location_caption">Location &amp; Radius</string>
+    <string name="bt_settings_save">Save</string>
+    <!-- END: Settings -->
 </resources>
