@@ -4,7 +4,7 @@ Device presence tracking application aimed to detect if device is inside of spec
 
 ## Prerequisites
 
-This application relies on Geolocation services so it does need corresponding permissions and enabled GPS module on device.
+This application relies on Geolocation and Google Play Services so it does need corresponding permissions, GPS module enabled and Google Play Services installed on device.
 
 Tracking is intended to be performed only while application is running (for simplicity).
 
