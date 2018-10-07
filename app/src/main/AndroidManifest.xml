@@ -38,6 +38,10 @@
             </intent-filter>
         </activity>
 
+        <service
+            android:name=".service.GeofencesTrackerIntentService"
+            android:exported="false" />
+
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyDeim30p9uK8hIjI4XYgrtYbClt6f7-Sx4" />

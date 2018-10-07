@@ -37,7 +37,7 @@ class SettingsViewModel : ViewModel(), CoroutineScope {
     }
 
     fun saveSsid(newSsid: String) {
-        logd { "Saving new SSID name: $ssidName" }
+        logd { "Saving new SSID name: $newSsid" }
         launch {
             settings.ssidName = newSsid
         }
