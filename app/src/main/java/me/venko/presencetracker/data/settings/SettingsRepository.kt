@@ -28,7 +28,7 @@ class SettingsRepository private constructor() {
         }
 
     var fencingRadius
-        get() = prefs.getFloat(PREF_FENCING_RADIUS, 0f)
+        get() = prefs.getFloat(PREF_FENCING_RADIUS, 9136f)
         set(value) {
             prefs.edit().putFloat(PREF_FENCING_RADIUS, value).apply()
         }

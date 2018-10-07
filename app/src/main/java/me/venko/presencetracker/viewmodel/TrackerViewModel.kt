@@ -10,4 +10,12 @@ import me.venko.presencetracker.utils.logd
  */
 class TrackerViewModel(application: Application) : AndroidViewModel(application) {
     private val settings by lazy { SettingsRepository.instance }
+
+    fun onLocationPermissionsGranted() {
+        logd { "Permissions granted" }
+    }
+
+    fun onLocationPermissionsDenied() {
+        logd { "Permissions declined" }
+    }
 }

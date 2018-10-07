@@ -6,4 +6,4 @@ import android.location.Location
  * @author Victor Kosenko
  *
  */
-data class LocationBounds(val center: Location, val radius: Float)
+data class LocationBounds(var center: Location, var radius: Float)

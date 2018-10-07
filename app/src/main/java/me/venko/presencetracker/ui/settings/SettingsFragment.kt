@@ -2,6 +2,7 @@ package me.venko.presencetracker.ui.settings
 
 import android.Manifest
 import android.annotation.SuppressLint
+import android.location.Location
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -9,11 +10,14 @@ import android.view.ViewGroup
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.google.android.gms.maps.CameraUpdateFactory
+import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.model.LatLng
 import kotlinx.android.synthetic.main.fragment_settings.*
 import me.venko.presencetracker.R
 import me.venko.presencetracker.data.Map
+import me.venko.presencetracker.data.tracker.LocationBounds
 import me.venko.presencetracker.ui.tracker.BaseFragment
+import me.venko.presencetracker.utils.evalDistanceInM
 import me.venko.presencetracker.utils.loge
 import me.venko.presencetracker.utils.newRadialBounds
 import me.venko.presencetracker.utils.popBackStack
@@ -28,6 +32,7 @@ import pub.devrel.easypermissions.EasyPermissions
 class SettingsFragment : BaseFragment() {
 
     private lateinit var viewModel: SettingsViewModel
+    private var locationBounds: LocationBounds? = null
 
     override fun onCreateView(
             inflater: LayoutInflater,
@@ -67,9 +72,14 @@ class SettingsFragment : BaseFragment() {
 
         btSave.setOnClickListener {
             viewModel.saveSsid(etSsidName.text.toString())
+            locationBounds?.let { bounds -> viewModel.saveLocationBounds(bounds) }
             popBackStack()
         }
+        val mapPadding = resources.getDimensionPixelSize(R.dimen.view_padding_regular)
         mapLocation.getMapAsync { googleMap ->
+            // Map padding should be the same as radius overlay margin for radius evaluation
+            // precision
+            googleMap.setPadding(mapPadding, mapPadding, mapPadding, mapPadding)
             if (EasyPermissions.hasPermissions(
                             context!!,
                             Manifest.permission.ACCESS_FINE_LOCATION,
@@ -79,6 +89,7 @@ class SettingsFragment : BaseFragment() {
             }
             viewModel.locationBounds.observe(this, Observer {
 
+                locationBounds = it
                 val cameraPosition = LatLng(it.center.latitude, it.center.longitude)
                 val cameraUpdate = if (it.radius > 0.0) {
                     CameraUpdateFactory.newLatLngBounds(newRadialBounds(cameraPosition, it.radius), 0)
@@ -87,6 +98,32 @@ class SettingsFragment : BaseFragment() {
                 }
                 googleMap.moveCamera(cameraUpdate)
             })
+
+            googleMap.setOnCameraIdleListener { onCameraIdle(googleMap) }
+        }
+    }
+
+    private fun onCameraIdle(googleMap: GoogleMap) {
+        val vr = googleMap.projection.visibleRegion
+        val right = vr.latLngBounds.northeast.longitude
+        val bottom = vr.latLngBounds.southwest.latitude
+        val anchorPoint = if (mapLocation.width <= mapLocation.height) {
+            LatLng(vr.latLngBounds.center.latitude, right)
+        } else {
+            LatLng(bottom, vr.latLngBounds.center.longitude)
+        }
+        val center = Location("").apply {
+            latitude = vr.latLngBounds.center.latitude
+            longitude = vr.latLngBounds.center.longitude
+        }
+        val distance = evalDistanceInM(vr.latLngBounds.center, anchorPoint)
+
+        locationBounds?.apply {
+            this.center.let {
+                it.latitude = center.latitude
+                it.longitude = center.longitude
+            }
+            this.radius = distance.toFloat()
         }
     }
 

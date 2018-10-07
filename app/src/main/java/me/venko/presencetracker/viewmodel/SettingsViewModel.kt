@@ -8,6 +8,7 @@ import kotlinx.coroutines.experimental.Dispatchers
 import kotlinx.coroutines.experimental.launch
 import me.venko.presencetracker.data.settings.SettingsRepository
 import me.venko.presencetracker.data.tracker.LocationBounds
+import me.venko.presencetracker.utils.logd
 import kotlin.coroutines.experimental.CoroutineContext
 
 /**
@@ -36,6 +37,7 @@ class SettingsViewModel : ViewModel(), CoroutineScope {
     }
 
     fun saveSsid(newSsid: String) {
+        logd { "Saving new SSID name: $ssidName" }
         launch {
             settings.ssidName = newSsid
         }
@@ -47,6 +49,14 @@ class SettingsViewModel : ViewModel(), CoroutineScope {
                     center = settings.fencingPoint,
                     radius = settings.fencingRadius
             ).let { data.postValue(it) }
+        }
+    }
+
+    fun saveLocationBounds(locationBounds: LocationBounds) {
+        logd { "Saving new location bound $locationBounds" }
+        launch {
+            settings.fencingPoint = locationBounds.center
+            settings.fencingRadius = locationBounds.radius
         }
     }
 }
