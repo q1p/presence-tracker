@@ -19,6 +19,7 @@
     <style name="AppTheme.EditText.SsidName" parent="Widget.AppCompat.EditText">
         <item name="android:maxLength">@integer/et_ssid_name_max_len</item>
         <item name="android:maxLines">1</item>
+        <item name="android:inputType">text</item>
     </style>
 
 </resources>
