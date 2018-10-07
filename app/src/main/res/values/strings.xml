@@ -14,6 +14,7 @@
     <string name="tv_tracker_status_evaluating">Initializing…</string>
     <string name="tv_tracker_status_present_geo">Inside (GEO)</string>
     <string name="tv_tracker_status_present_wifi">Inside (Wi-Fi)</string>
+    <string name="tv_tracker_status_present_both">Inside</string>
     <string name="tv_tracker_status_outside">Outside</string>
     <string name="tv_tracker_status_no_permissions">No permissions given</string>
     <string name="tv_tracker_status_unknown">Unknown</string>

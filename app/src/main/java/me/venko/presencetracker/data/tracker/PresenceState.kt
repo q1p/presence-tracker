@@ -5,5 +5,5 @@ package me.venko.presencetracker.data.tracker
  *
  */
 enum class PresenceState {
-    EVALUATING, INSIDE_GEO, INSIDE_WIFI, OUTSIDE_BOTH, OUTSIDE, NO_PERMISSIONS, UNKNOWN
+    EVALUATING, INSIDE_GEO, INSIDE_WIFI, INSIDE_BOTH, OUTSIDE, NO_PERMISSIONS, UNKNOWN
 }

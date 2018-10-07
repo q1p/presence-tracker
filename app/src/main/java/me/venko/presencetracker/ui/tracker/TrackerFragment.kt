@@ -5,9 +5,12 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import kotlinx.android.synthetic.main.fragment_tracker.*
 import me.venko.presencetracker.R
+import me.venko.presencetracker.data.tracker.PresenceState
+import me.venko.presencetracker.data.tracker.PresenceState.*
 import me.venko.presencetracker.ui.settings.SettingsFragment
 import me.venko.presencetracker.utils.replaceFragmentAnimate
 import me.venko.presencetracker.viewmodel.TrackerViewModel
@@ -31,8 +34,24 @@ class TrackerFragment : BaseFragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         viewModel = ViewModelProviders.of(this).get(TrackerViewModel::class.java)
+        viewModel.presenceState.observe(this, Observer {
+            tvStatus.text = getPresenceStatus(it)
+        })
         btSettings.setOnClickListener { displaySettings() }
         requestLocationPermissions()
+    }
+
+    private fun getPresenceStatus(presenceState: PresenceState): String {
+        val statusRes = when (presenceState) {
+            EVALUATING -> R.string.tv_tracker_status_evaluating
+            INSIDE_GEO -> R.string.tv_tracker_status_present_geo
+            INSIDE_WIFI -> R.string.tv_tracker_status_present_wifi
+            INSIDE_BOTH -> R.string.tv_tracker_status_present_both
+            OUTSIDE -> R.string.tv_tracker_status_outside
+            NO_PERMISSIONS -> R.string.tv_tracker_status_no_permissions
+            UNKNOWN -> R.string.tv_tracker_status_unknown
+        }
+        return getString(statusRes)
     }
 
     private fun displaySettings() {
