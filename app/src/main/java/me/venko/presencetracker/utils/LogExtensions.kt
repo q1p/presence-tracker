@@ -73,7 +73,7 @@ fun Any.loge(cause: Throwable, message: () -> Any?) {
     }
 }
 
-internal inline fun (() -> Any?).toStringSafe(): String {
+internal fun (() -> Any?).toStringSafe(): String {
     return try {
         invoke().toString()
     } catch (e: Exception) {
