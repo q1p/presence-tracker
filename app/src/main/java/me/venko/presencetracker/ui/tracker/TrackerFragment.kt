@@ -13,7 +13,8 @@ import me.venko.presencetracker.data.tracker.PresenceState
 import me.venko.presencetracker.data.tracker.PresenceState.*
 import me.venko.presencetracker.ui.settings.SettingsFragment
 import me.venko.presencetracker.utils.replaceFragmentAnimate
-import me.venko.presencetracker.viewmodel.TrackerViewModel
+import me.venko.presencetracker.viewmodel.LocationTrackerViewModel
+import me.venko.presencetracker.viewmodel.PresenceTrackerViewModel
 import pub.devrel.easypermissions.EasyPermissions
 import pub.devrel.easypermissions.PermissionRequest
 
@@ -23,7 +24,8 @@ import pub.devrel.easypermissions.PermissionRequest
  */
 class TrackerFragment : BaseFragment() {
 
-    private lateinit var viewModel: TrackerViewModel
+    private lateinit var presenceViewModel: PresenceTrackerViewModel
+    private lateinit var locationViewModel: LocationTrackerViewModel
 
     override fun onCreateView(
             inflater: LayoutInflater,
@@ -33,10 +35,11 @@ class TrackerFragment : BaseFragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        viewModel = ViewModelProviders.of(this).get(TrackerViewModel::class.java)
-        viewModel.presenceState.observe(this, Observer {
+        presenceViewModel = ViewModelProviders.of(this).get(PresenceTrackerViewModel::class.java)
+        presenceViewModel.presenceState.observe(this, Observer {
             tvStatus.text = getPresenceStatus(it)
         })
+        locationViewModel = ViewModelProviders.of(activity!!).get(LocationTrackerViewModel::class.java)
         btSettings.setOnClickListener { displaySettings() }
         requestLocationPermissions()
     }
@@ -74,13 +77,15 @@ class TrackerFragment : BaseFragment() {
 
     override fun onPermissionsGranted(requestCode: Int, perms: MutableList<String>) {
         if (REQUEST_LOCATION_PERMS == requestCode) {
-            viewModel.onLocationPermissionsGranted()
+            presenceViewModel.onLocationPermissionsGranted()
+            locationViewModel.onLocationPermissionsGranted()
         }
     }
 
     override fun onPermissionsDenied(requestCode: Int, perms: MutableList<String>) {
         if (REQUEST_LOCATION_PERMS == requestCode) {
-            viewModel.onLocationPermissionsDenied()
+            presenceViewModel.onLocationPermissionsDenied()
+            locationViewModel.onLocationPermissionsGranted()
         }
     }
 

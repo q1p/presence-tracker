@@ -4,12 +4,16 @@ import android.annotation.SuppressLint
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
-import com.google.android.gms.location.*
+import com.google.android.gms.location.Geofence
+import com.google.android.gms.location.GeofencingClient
+import com.google.android.gms.location.GeofencingRequest
+import com.google.android.gms.location.LocationServices
 import me.venko.presencetracker.data.events.GeofencingStatusUpdate
 import me.venko.presencetracker.service.GeofencesTrackerIntentService
 import me.venko.presencetracker.utils.logd
 import me.venko.presencetracker.utils.loge
 import me.venko.presencetracker.utils.logv
+import me.venko.presencetracker.utils.logw
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
@@ -20,11 +24,10 @@ import org.greenrobot.eventbus.ThreadMode
  */
 class GeofencesTracker(
         private val context: Context,
-        val onStatusUpdate: (GeofencingStatus) -> Unit
+        private val onStatusUpdate: (GeofencingStatus) -> Unit
 ) {
 
     private var geofencingClient: GeofencingClient? = null
-    private var fusedLocationClient: FusedLocationProviderClient? = null
     private val bus = EventBus.getDefault()
 
     @SuppressLint("MissingPermission")
@@ -34,15 +37,6 @@ class GeofencesTracker(
         geofencingClient = LocationServices.getGeofencingClient(context)
 
         setupGeofencing(locationBounds)
-
-        fusedLocationClient = LocationServices.getFusedLocationProviderClient(context)
-
-        val locationRequest = LocationRequest.create().apply {
-            priority = LocationRequest.PRIORITY_HIGH_ACCURACY
-            interval = UPDATE_INTERVAL
-            fastestInterval = FASTEST_INTERVAL
-        }
-        fusedLocationClient?.requestLocationUpdates(locationRequest, locationCallback, null)
     }
 
     fun updateBounds(locationBounds: LocationBounds) {
@@ -51,6 +45,16 @@ class GeofencesTracker(
 
     @SuppressLint("MissingPermission")
     private fun setupGeofencing(locationBounds: LocationBounds) {
+        when {
+            locationBounds.isEmpty() -> {
+                logw { "Location bounds is not set" }
+                return
+            }
+            locationBounds.radius == 0f -> {
+                logd { "Geofences radius is not set" }
+                return
+            }
+        }
         val geofence = makeGeofence(locationBounds)
 
         geofencingClient?.addGeofences(getGeofencingRequest(geofence), geofencePendingIntent)?.run {
@@ -76,17 +80,6 @@ class GeofencesTracker(
             .setTransitionTypes(Geofence.GEOFENCE_TRANSITION_ENTER or Geofence.GEOFENCE_TRANSITION_EXIT)
             .build()
 
-    private val locationCallback: LocationCallback = object : LocationCallback() {
-        override fun onLocationResult(result: LocationResult?) {
-            super.onLocationResult(result)
-            onLocationChanged(result)
-        }
-    }
-
-    private fun onLocationChanged(result: LocationResult?) {
-        logd { "Current location update: ${result?.lastLocation}" }
-    }
-
     private val geofencePendingIntent: PendingIntent by lazy {
         val intent = Intent(context, GeofencesTrackerIntentService::class.java)
         PendingIntent.getService(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT)
@@ -110,12 +103,9 @@ class GeofencesTracker(
         logv { "Unregistering tracker" }
         geofencingClient?.removeGeofences(geofencePendingIntent)
         bus.unregister(this)
-        fusedLocationClient?.removeLocationUpdates(locationCallback)
     }
 
     companion object {
         private const val GEOCFENCE_ID = "primaryGeofence"
-        private const val UPDATE_INTERVAL: Long = 15 * 1000 //15 seconds
-        private const val FASTEST_INTERVAL: Long = 5 * 1000 //5 seconds
     }
 }

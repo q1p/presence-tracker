@@ -17,7 +17,7 @@ import kotlin.coroutines.experimental.CoroutineContext
 /**
  * @author Victor Kosenko
  */
-class TrackerViewModel(application: Application) : AndroidViewModel(application), CoroutineScope {
+class PresenceTrackerViewModel(application: Application) : AndroidViewModel(application), CoroutineScope {
 
     override val coroutineContext: CoroutineContext
         get() = Dispatchers.IO // using IO dispatcher due settings access

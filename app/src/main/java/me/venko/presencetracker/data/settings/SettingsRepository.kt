@@ -28,7 +28,7 @@ class SettingsRepository private constructor() {
         }
 
     var fencingRadius
-        get() = prefs.getFloat(PREF_FENCING_RADIUS, 9136f)
+        get() = prefs.getFloat(PREF_FENCING_RADIUS, 0f)
         set(value) {
             prefs.edit().putFloat(PREF_FENCING_RADIUS, value).apply()
         }
@@ -36,8 +36,8 @@ class SettingsRepository private constructor() {
     var fencingPoint: Location
         get() {
             return Location("").apply {
-                latitude = prefs.getDouble(PREF_FENCING_POINT_LAT, 57.44153)
-                longitude = prefs.getDouble(PREF_FENCING_POINT_LON, 42.17098)
+                latitude = prefs.getDouble(PREF_FENCING_POINT_LAT, 0.0)
+                longitude = prefs.getDouble(PREF_FENCING_POINT_LON, 0.0)
             }
         }
         set(value) {
