@@ -24,6 +24,7 @@
     <string name="tv_settings_ssid_caption">SSID Name</string>
     <string name="et_settings_ssid_name_hint">Enter access point SSID</string>
     <string name="tv_settings_location_caption">Location &amp; Radius</string>
+    <string name="tv_settings_location_caption_formatted">Location &amp; Radius (%s km)</string>
     <string name="bt_settings_save">Save</string>
     <!-- END: Settings -->
 </resources>

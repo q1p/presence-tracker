@@ -153,6 +153,8 @@ class SettingsFragment : BaseFragment() {
             longitude = vr.latLngBounds.center.longitude
         }
         val distance = evalDistanceInM(vr.latLngBounds.center, anchorPoint)
+        tvLocationCaption.text = getString(R.string.tv_settings_location_caption_formatted,
+                getPrintableDistanceInKm(distance))
 
         updatedLocationBounds.apply {
             this.center.let {
