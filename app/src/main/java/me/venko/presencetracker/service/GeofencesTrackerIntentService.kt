@@ -18,14 +18,16 @@ import org.greenrobot.eventbus.EventBus
 class GeofencesTrackerIntentService : IntentService("Geofences Service") {
 
     override fun onHandleIntent(intent: Intent?) {
+        val bus = EventBus.getDefault()
+
         val geofencingEvent = GeofencingEvent.fromIntent(intent)
         if (geofencingEvent.hasError()) {
             loge { "Geocences handling error: ${geofencingEvent.errorCode}" }
+            bus.post(GeofencingStatusUpdate(GeofencingStatus.UNKNOWN))
             return
         }
 
         val geofenceTransition = geofencingEvent.geofenceTransition
-        val bus = EventBus.getDefault()
         when (geofenceTransition) {
             Geofence.GEOFENCE_TRANSITION_ENTER -> {
                 logd { "Geofences enter" }
