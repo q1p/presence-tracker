@@ -83,6 +83,8 @@ class SettingsFragment : BaseFragment() {
                     }
                 }
             })
+        } else {
+            locationViewModel.onLocationPermissionsDenied()
         }
 
         btSave.setOnClickListener {

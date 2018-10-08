@@ -85,7 +85,7 @@ class TrackerFragment : BaseFragment() {
     override fun onPermissionsDenied(requestCode: Int, perms: MutableList<String>) {
         if (REQUEST_LOCATION_PERMS == requestCode) {
             presenceViewModel.onLocationPermissionsDenied()
-            locationViewModel.onLocationPermissionsGranted()
+            locationViewModel.onLocationPermissionsDenied()
         }
     }
 
