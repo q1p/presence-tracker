@@ -23,7 +23,7 @@ class GeofencesTrackerIntentService : IntentService("Geofences Service") {
         val geofencingEvent = GeofencingEvent.fromIntent(intent)
         if (geofencingEvent.hasError()) {
             loge { "Geocences handling error: ${geofencingEvent.errorCode}" }
-            bus.post(GeofencingStatusUpdate(GeofencingStatus.UNKNOWN))
+            bus.post(GeofencingStatusUpdate(GeofencingStatus.ERROR))
             return
         }
 

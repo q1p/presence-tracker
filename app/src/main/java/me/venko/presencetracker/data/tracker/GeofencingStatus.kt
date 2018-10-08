@@ -5,5 +5,5 @@ package me.venko.presencetracker.data.tracker
  *
  */
 enum class GeofencingStatus {
-    INSIDE, OUTSIDE, UNKNOWN
+    INSIDE, OUTSIDE, GPS_UNAVAILABLE, ERROR
 }

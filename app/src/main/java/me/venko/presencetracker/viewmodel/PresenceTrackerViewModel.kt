@@ -28,7 +28,7 @@ class PresenceTrackerViewModel(application: Application) : AndroidViewModel(appl
     private var geofencesTracker: GeofencesTracker? = null
 
     private var currentWifiSsid: String? = null
-    private var geofencingStatus = GeofencingStatus.UNKNOWN
+    private var geofencingStatus = GeofencingStatus.ERROR
 
     private val _presenceState = MutableLiveData<PresenceState>()
             .apply {
